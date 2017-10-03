@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B855CFF1F833231007F8931 /* MainSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855CFE1F833231007F8931 /* MainSceneController.swift */; };
 		9BCCCC671F7BF4B700B2222B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCCCC661F7BF4B700B2222B /* AppDelegate.swift */; };
 		9BCCCC691F7BF4B700B2222B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCCCC681F7BF4B700B2222B /* ViewController.swift */; };
 		9BCCCC6C1F7BF4B700B2222B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BCCCC6A1F7BF4B700B2222B /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B855CFD1F83305E007F8931 /* Rectangle 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rectangle 1.png"; sourceTree = "<group>"; };
+		9B855CFE1F833231007F8931 /* MainSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSceneController.swift; sourceTree = "<group>"; };
 		9BCCCC631F7BF4B700B2222B /* AllCampus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AllCampus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCCCC661F7BF4B700B2222B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BCCCC681F7BF4B700B2222B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,8 +61,10 @@
 				9BCCCC681F7BF4B700B2222B /* ViewController.swift */,
 				9BCCCC6A1F7BF4B700B2222B /* Main.storyboard */,
 				9BCCCC6D1F7BF4B800B2222B /* Assets.xcassets */,
+				9B855CFD1F83305E007F8931 /* Rectangle 1.png */,
 				9BCCCC6F1F7BF4B800B2222B /* LaunchScreen.storyboard */,
 				9BCCCC721F7BF4B800B2222B /* Info.plist */,
+				9B855CFE1F833231007F8931 /* MainSceneController.swift */,
 			);
 			path = AllCampus;
 			sourceTree = "<group>";
@@ -137,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BCCCC691F7BF4B700B2222B /* ViewController.swift in Sources */,
+				9B855CFF1F833231007F8931 /* MainSceneController.swift in Sources */,
 				9BCCCC671F7BF4B700B2222B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
