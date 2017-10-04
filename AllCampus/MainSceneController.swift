@@ -15,13 +15,38 @@ class MainSceneController: UIViewController {
     var yPos = 0.0
     var xOffset = 0.0
     var UIIconSize = 50.0
+    var eventData = [postedEventData]()
+   
     
     override func viewDidLoad() {
-        xOffset = Double(self.view.frame.width * 0.05)
+        
+        //Gradient Implementation will stay in the background at the size of the scrollview
+        //it will be a sublayer of the main view however!
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getLoveGradient()
+        gradientLayer.frame = scroller.frame
+        scroller.backgroundColor = .clear
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        //offset of object to the right
+        //made to change based off of device screen width
+        xOffset = Double(self.view.frame.width * 0.22)
+        if(Double(self.view.frame.width) < 350){
+            xOffset = Double(self.view.frame.width * 0.1)
+        }
         //3 test objects
-        addObject(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Mon Oct 27. 7PM - 9PM")
-        addObject(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Wed Oct 28. 10AM - 3PM")
-        addObject(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Fri Oct 30. 10PM")
+        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Mon Oct 27. 7PM - 9PM"))
+        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Wed Oct 28. 10AM - 3PM"))
+        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Fri Oct 30. 10PM"))
+        
+        //loop index in for-in loop
+        //loop iterates through event data and adds each event to scrollView
+        var i = 0
+        for _ in 1...eventData.count{
+            addObject(data: eventData[i])
+            i += 1
+        }
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -33,7 +58,7 @@ class MainSceneController: UIViewController {
     }
     
     //This function will add each container for each event and pass in all necessary info regarding the event
-    func addObject(title: String, content: String, eventTime: String)  {
+    func addObject(data: postedEventData)  {
         //UI objects
         var container = UIImageView(frame: CGRect(x:xOffset, y:50 + yPos,width: 283, height: 360))
         let image = UIImage(named: "Rectangle 1")
@@ -48,20 +73,20 @@ class MainSceneController: UIViewController {
         let mapButton = UIButton(frame: CGRect(x: xOffset + 115, y: 320 + yPos, width: UIIconSize, height: UIIconSize))
         
         //Design Attributes for all text
-        labelHeader.text = title
+        labelHeader.text = data.title
         labelHeader.textColor = UIColor(hue: 211/360, saturation: 21/100, brightness: 53/100, alpha: 1.0)
         labelHeader.font = UIFont(name: "Helvetica Bold", size: 30)
         labelHeader.textAlignment = .center
         
-        labelContent.text = content
+        labelContent.text = data.content
         labelContent.textColor = UIColor(hue: 211/360, saturation: 21/100, brightness: 53/100, alpha: 1.0)
         labelContent.font = UIFont(name: "Helvetica", size: 15)
         labelContent.numberOfLines = 8
         labelContent.sizeToFit()
         labelContent.lineBreakMode = .byWordWrapping
         
+        labelTime.text = data.eventTime
         labelTime.textColor = UIColor(hue: 5/360, saturation: 77/100, brightness: 75/100, alpha: 1.0)
-        labelTime.text = eventTime
         labelTime.font = UIFont(name: "Helvetica", size: 17)
         labelTime.sizeToFit()
         labelTime.textAlignment = .center
@@ -87,15 +112,17 @@ class MainSceneController: UIViewController {
         UIlineViewer.backgroundColor = UIColor(patternImage: UILineImage!)
         
         //resizing the header to fit properly
-        if(title.count > 13){
+        if(data.title.count > 13){
             labelHeader.font = UIFont(name: "Helvetica Bold", size: 25)
         }
-        if(title.count > 16){
+        if(data.title.count > 16){
             labelHeader.font = UIFont(name: "Helvetica Bold", size: 20)
         }
-        if(title.count > 22){
+        if(data.title.count > 22){
             labelHeader.font = UIFont(name: "Helvetica Bold", size: 18)
         }
+        
+        
         
         //adds all objects to the scroll view
         scroller.addSubview(container)
@@ -109,6 +136,7 @@ class MainSceneController: UIViewController {
         //Reposition where next image would be
         yPos += 400
         self.scroller.contentSize = CGSize(width: 0,height: CGFloat(yPos + 100))
+        
     }
     
     
@@ -143,6 +171,7 @@ class MainSceneController: UIViewController {
     }
     
     //test function for buttons to call alerts
+    //#selector calls need an "@objc" objective-c function
     @objc func doStuff() {
         let alertcontroller = UIAlertController(title: "Clicked!", message: "Close?", preferredStyle: UIAlertControllerStyle.alert)
         alertcontroller.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
