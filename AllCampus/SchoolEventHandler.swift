@@ -15,13 +15,15 @@ import Foundation
  -Time of event
  */
 struct postedEventData {
-    let title,content,eventTime: String
-    init(title: String, content: String, eventTime: String){
+    let title,content,endTime,eventTime: String
+    var tagData: Int
+    init(title: String, content: String, eventTime: String, endTime: String, tagData: Int){
         self.title = title
         self.content = content
         self.eventTime = eventTime
+        self.endTime = endTime
+        self.tagData = tagData
     }
-    
     
 };
 

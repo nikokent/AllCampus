@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 class MainSceneController: UIViewController {
     @IBOutlet weak var scroller: UIScrollView!
@@ -36,15 +37,16 @@ class MainSceneController: UIViewController {
             xOffset = Double(self.view.frame.width * 0.1)
         }
         //3 test objects
-        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Mon Oct 27. 7PM - 9PM"))
-        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Wed Oct 28. 10AM - 3PM"))
-        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Fri Oct 30. 10PM"))
+        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0))
+        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0))
+        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0))
         
         //loop index in for-in loop
         //loop iterates through event data and adds each event to scrollView
         var i = 0
         for _ in 1...eventData.count{
-            addObject(data: eventData[i])
+            eventData[i].tagData = i
+            addObject(data: eventData[i], tag: i)
             i += 1
         }
         super.viewDidLoad()
@@ -58,7 +60,7 @@ class MainSceneController: UIViewController {
     }
     
     //This function will add each container for each event and pass in all necessary info regarding the event
-    func addObject(data: postedEventData)  {
+    func addObject(data: postedEventData, tag: Int)  {
         //UI objects
         var container = UIImageView(frame: CGRect(x:xOffset, y:50 + yPos,width: 283, height: 360))
         let image = UIImage(named: "Rectangle 1")
@@ -99,9 +101,11 @@ class MainSceneController: UIViewController {
         mapImage = resizeImage(image: mapImage!, targetSize: CGSize.init(width: UIIconSize, height: UIIconSize))
         
         
-        //button design
+        //button design and event selectors
+        let eventHandler = ExternalEventHandler()
         calendarButton.backgroundColor = UIColor(patternImage: calendarImage!)
-        calendarButton.addTarget(self, action: #selector(doStuff), for: .touchUpInside)
+        calendarButton.tag = tag
+        calendarButton.addTarget(self, action: #selector(addToCalendar(_:)), for: .touchUpInside)
         mapButton.backgroundColor = UIColor(patternImage: mapImage!)
         mapButton.addTarget(self, action: #selector(doStuff), for: .touchUpInside)
         
@@ -179,5 +183,25 @@ class MainSceneController: UIViewController {
         }))
         self.present(alertcontroller, animated: true,completion: nil)
     }
+    
+    @objc func addToCalendar(_ sender: UIButton) {
+        //date formatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy h:mm a"
+        let StartDate = formatter.date(from: eventData[sender.tag].eventTime)
+        let EndDate = formatter.date(from: eventData[sender.tag].endTime)
+        
+        //event handler from "externalEvents.swift"
+        //sender.tag is given in loadview() and passed in at add object
+        let eventHandler = ExternalEventHandler()
+        eventHandler.addEventToCalendar(title: eventData[sender.tag].title, description: eventData[sender.tag].content, startDate: StartDate!, endDate: EndDate!, completion: nil)
+        let alertcontroller = UIAlertController(title: eventData[sender.tag].title, message: "has been added to your calendar!\n\(eventData[sender.tag].eventTime)", preferredStyle: UIAlertControllerStyle.alert)
+        alertcontroller.addAction(UIAlertAction(title: "close", style: .default, handler: { (action: UIAlertAction!) in
+            print("Handle Ok logic here")
+        }))
+        self.present(alertcontroller, animated: true,completion: nil)
+    }
+    
+    
 
 }
