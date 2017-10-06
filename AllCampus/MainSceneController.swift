@@ -113,7 +113,7 @@ class MainSceneController: UIViewController {
         //mapImage = resizeImage(image: mapImage!, targetSize: CGSize.init(width: UIIconSize, height: UIIconSize))
         
         
-        //button design and event selectors
+        //button styling and event selectors
         let eventHandler = ExternalEventHandler()
         calendarButton.backgroundColor = UIColor.clear
         calendarButton.layer.cornerRadius = 15
