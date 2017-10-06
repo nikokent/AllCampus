@@ -35,6 +35,21 @@ extension String {
     }
 }
 
+//Credits: Alvin George on Stack Overflow
+//extension to UIImageView to add blur effect
+extension UIImageView
+{
+    func addBlurEffect()
+    {
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.bounds
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
+        self.addSubview(blurEffectView)
+    }
+}
+
 
 class ColorsHandler{
     

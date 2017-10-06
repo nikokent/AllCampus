@@ -31,6 +31,8 @@
 		9B855D0A1F855CC6007F8931 /* SchoolEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolEventHandler.swift; sourceTree = "<group>"; };
 		9B855D0C1F856336007F8931 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		9B855D0E1F85A292007F8931 /* externalEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = externalEvents.swift; sourceTree = "<group>"; };
+		9B855D101F877E85007F8931 /* megaphone-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "megaphone-1.png"; sourceTree = "<group>"; };
+		9B855D111F877EAE007F8931 /* megaphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = megaphone.png; sourceTree = "<group>"; };
 		9BCCCC631F7BF4B700B2222B /* AllCampus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AllCampus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCCCC661F7BF4B700B2222B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9BCCCC681F7BF4B700B2222B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,8 @@
 				9BCCCC681F7BF4B700B2222B /* ViewController.swift */,
 				9BCCCC6A1F7BF4B700B2222B /* Main.storyboard */,
 				9BCCCC6D1F7BF4B800B2222B /* Assets.xcassets */,
+				9B855D111F877EAE007F8931 /* megaphone.png */,
+				9B855D101F877E85007F8931 /* megaphone-1.png */,
 				9B855D061F848D6F007F8931 /* map-location.png */,
 				9B855D051F848D37007F8931 /* calendar-7.png */,
 				9B855D021F847E55007F8931 /* Line 1.png */,

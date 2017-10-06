@@ -11,11 +11,12 @@ import EventKit
 
 class MainSceneController: UIViewController {
     @IBOutlet weak var scroller: UIScrollView!
+    @IBOutlet weak var BottomMenuBar: UIImageView!
     
     //Stores the offset of y position between each flier
     var yPos = 0.0
     var xOffset = 0.0
-    var UIIconSize = 50.0
+    var UIIconSize = 186.0
     var eventData = [postedEventData]()
    
     
@@ -36,6 +37,11 @@ class MainSceneController: UIViewController {
         if(Double(self.view.frame.width) < 350){
             xOffset = Double(self.view.frame.width * 0.1)
         }
+        
+        //bottom Menu Bar Design
+        BottomMenuBar.backgroundColor = UIColor.black
+        BottomMenuBar.addBlurEffect()
+        
         //3 test objects
         eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0))
         eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0))
@@ -63,32 +69,38 @@ class MainSceneController: UIViewController {
     func addObject(data: postedEventData, tag: Int)  {
         //UI objects
         var container = UIImageView(frame: CGRect(x:xOffset, y:50 + yPos,width: 283, height: 360))
-        let image = UIImage(named: "Rectangle 1")
+        //let image = UIImage(named: "Rectangle 1")
         let UIlineViewer = UIImageView(frame: CGRect(x: xOffset + 41, y: 117 + yPos, width: 200, height: 1.5))
         let UILineImage = UIImage(named: "Line 1")
         let labelHeader = UILabel(frame: CGRect(x: xOffset, y: 73 + yPos, width: 283, height: 50))
         let labelContent = UILabel(frame: CGRect(x: xOffset + 39, y: 170 + yPos, width: 200, height: 150))
         let labelTime = UILabel(frame: CGRect(x: xOffset + 39, y: 135 + yPos, width: 200, height: 80))
-        var calendarImage = UIImage(named: "calendar-7")
-        let calendarButton = UIButton(frame: CGRect(x: xOffset + 39, y: 320 + yPos, width: UIIconSize, height: UIIconSize))
-        var mapImage = UIImage(named: "map-location")
-        let mapButton = UIButton(frame: CGRect(x: xOffset + 115, y: 320 + yPos, width: UIIconSize, height: UIIconSize))
+        var calendarImage = UIImage(named: "purpleButton")
+        let calendarButton = UIButton(frame: CGRect(x: xOffset + 50, y: 300 + yPos, width: UIIconSize, height: 33))
+        var mapImage = UIImage(named: "blueButton")
+        let mapButton = UIButton(frame: CGRect(x: xOffset + 50, y: 340 + yPos, width: UIIconSize, height: 33))
         
         //Design Attributes for all text
         labelHeader.text = data.title
-        labelHeader.textColor = UIColor(hue: 211/360, saturation: 21/100, brightness: 53/100, alpha: 1.0)
+        labelHeader.textColor = UIColor(hue: 246/360, saturation: 11/100, brightness: 47/100, alpha: 1.0)
+        
+        //these changes are for purple color with shadow underglow
+        //labelHeader.textColor = UIColor(hue: 0.7389, saturation: 0.41, brightness: 0.73, alpha: 1.0)
+       // labelHeader.layer.shadowRadius = 0.7
+       // labelHeader.layer.shadowOpacity = 0.5
+        //labelHeader.layer.shadowOffset = CGSize(width: 0.7, height: 0.7)
         labelHeader.font = UIFont(name: "Helvetica Bold", size: 30)
         labelHeader.textAlignment = .center
         
         labelContent.text = data.content
-        labelContent.textColor = UIColor(hue: 211/360, saturation: 21/100, brightness: 53/100, alpha: 1.0)
+        labelContent.textColor = UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0)
         labelContent.font = UIFont(name: "Helvetica", size: 15)
         labelContent.numberOfLines = 8
         labelContent.sizeToFit()
         labelContent.lineBreakMode = .byWordWrapping
         
         labelTime.text = data.eventTime
-        labelTime.textColor = UIColor(hue: 5/360, saturation: 77/100, brightness: 75/100, alpha: 1.0)
+        labelTime.textColor = UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0)
         labelTime.font = UIFont(name: "Helvetica", size: 17)
         labelTime.sizeToFit()
         labelTime.textAlignment = .center
@@ -97,22 +109,46 @@ class MainSceneController: UIViewController {
         //image resizing
         //UIIconsize is the same as the previously set width and height to avoid multiple images
 
-        calendarImage = resizeImage(image: calendarImage!, targetSize: CGSize.init(width: UIIconSize, height: UIIconSize))
-        mapImage = resizeImage(image: mapImage!, targetSize: CGSize.init(width: UIIconSize, height: UIIconSize))
+        //calendarImage = resizeImage(image: calendarImage!, targetSize: CGSize.init(width: UIIconSize, height: 40))
+        //mapImage = resizeImage(image: mapImage!, targetSize: CGSize.init(width: UIIconSize, height: UIIconSize))
         
         
         //button design and event selectors
         let eventHandler = ExternalEventHandler()
-        calendarButton.backgroundColor = UIColor(patternImage: calendarImage!)
+        calendarButton.backgroundColor = UIColor.clear
+        calendarButton.layer.cornerRadius = 15
+        calendarButton.layer.borderWidth = 1
+        calendarButton.layer.borderColor = UIColor(hue: 0.825, saturation: 0.4, brightness: 0.7, alpha: 1.0).cgColor
+        calendarButton.showsTouchWhenHighlighted = true
+        calendarButton.setTitleColor(UIColor(hue: 0.825, saturation: 0.4, brightness: 0.7, alpha: 0.6), for: .highlighted)
         calendarButton.tag = tag
+        calendarButton.setTitle("Add to Calendar", for: .normal)
+        calendarButton.titleLabel?.font = UIFont(name: "Helvetica", size: 17)
+        calendarButton.setTitleColor(UIColor(hue: 0.825, saturation: 0.4, brightness: 0.7, alpha: 1.0), for: .normal)
         calendarButton.addTarget(self, action: #selector(addToCalendar(_:)), for: .touchUpInside)
-        mapButton.backgroundColor = UIColor(patternImage: mapImage!)
+        mapButton.backgroundColor = UIColor.clear
+        mapButton.layer.cornerRadius = 15
+        mapButton.layer.borderWidth = 1
+        mapButton.layer.borderColor = UIColor(hue: 0.6278, saturation: 0.68, brightness: 0.86, alpha: 1.0).cgColor
         mapButton.addTarget(self, action: #selector(doStuff), for: .touchUpInside)
+        mapButton.tag = tag
+        mapButton.showsTouchWhenHighlighted = true
+        mapButton.setTitleColor(UIColor(hue: 0.6278, saturation: 0.68, brightness: 0.86, alpha: 0.6), for: .highlighted)
+        mapButton.setTitle("Open in Maps", for: .normal)
+        mapButton.titleLabel?.font = UIFont(name: "Helvetica",size: 17)
+        mapButton.setTitleColor(UIColor(hue: 0.6278, saturation: 0.68, brightness: 0.86, alpha: 1.0), for: .normal)
         
         
         
         //assign background image that will be the "flier" for each event. Users "Rectangle 1"
-        container.backgroundColor = UIColor(patternImage: image!)
+        //container.backgroundColor = UIColor(patternImage: image!)
+        container.backgroundColor = UIColor.white
+        container.layer.cornerRadius = 25
+        container.layer.masksToBounds = false
+        container.layer.shadowRadius = 5
+        container.layer.shadowOffset = CGSize(width: 5, height: 10)
+        container.layer.shadowOpacity = 0.5
+    
         UIlineViewer.backgroundColor = UIColor(patternImage: UILineImage!)
         
         //resizing the header to fit properly
@@ -120,10 +156,10 @@ class MainSceneController: UIViewController {
             labelHeader.font = UIFont(name: "Helvetica Bold", size: 25)
         }
         if(data.title.count > 16){
-            labelHeader.font = UIFont(name: "Helvetica Bold", size: 20)
+            labelHeader.font = UIFont(name: "Helvetica Bold", size: 22)
         }
         if(data.title.count > 22){
-            labelHeader.font = UIFont(name: "Helvetica Bold", size: 18)
+            labelHeader.font = UIFont(name: "Helvetica Bold", size: 20)
         }
         
         
@@ -184,6 +220,11 @@ class MainSceneController: UIViewController {
         self.present(alertcontroller, animated: true,completion: nil)
     }
     
+    
+    //Function to add actual event to the ios calendar
+    //makes use of sender for UIButton which is essential to specify which event by ID tag
+    //              so we can make the appropriate changes to the calendar.
+    //This function requires import EventKit
     @objc func addToCalendar(_ sender: UIButton) {
         //date formatter
         let formatter = DateFormatter()
@@ -201,7 +242,4 @@ class MainSceneController: UIViewController {
         }))
         self.present(alertcontroller, animated: true,completion: nil)
     }
-    
-    
-
 }
