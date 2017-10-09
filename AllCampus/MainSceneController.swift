@@ -43,9 +43,10 @@ class MainSceneController: UIViewController {
         BottomMenuBar.addBlurEffect()
         
         //3 test objects
-        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0))
-        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0))
-        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0))
+        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0, EventType: 1))
+        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0, EventType: 2))
+        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0, EventType: 3))
+        eventData.append(postedEventData(title:"Pullman Farmer's Market", content: "Downtown Pullman will be having a Farmer's market! There will be plenty of stalls with Local Produce, Clothing, and More. There will be live music and plenty of fun for the whole family! See you there 🐮", eventTime: "Nov 5, 2017 8:00 am", endTime: "Nov 5, 2017 2:00 pm" , tagData: 0, EventType: 4))
         
         //loop index in for-in loop
         //loop iterates through event data and adds each event to scrollView
@@ -73,13 +74,13 @@ class MainSceneController: UIViewController {
         let UIlineViewer = UIImageView(frame: CGRect(x: xOffset + 41, y: 117 + yPos, width: 200, height: 1.5))
         let UILineImage = UIImage(named: "Line 1")
         let labelHeader = UILabel(frame: CGRect(x: xOffset, y: 73 + yPos, width: 283, height: 50))
-        let labelContent = UILabel(frame: CGRect(x: xOffset + 39, y: 170 + yPos, width: 200, height: 150))
+        let labelContent = UILabel(frame: CGRect(x: xOffset + 39, y: 160 + yPos, width: 200, height: 100))
         let labelTime = UILabel(frame: CGRect(x: xOffset + 39, y: 135 + yPos, width: 200, height: 80))
         var calendarImage = UIImage(named: "purpleButton")
         let calendarButton = UIButton(frame: CGRect(x: xOffset + 50, y: 300 + yPos, width: UIIconSize, height: 33))
         var mapImage = UIImage(named: "blueButton")
         let mapButton = UIButton(frame: CGRect(x: xOffset + 50, y: 340 + yPos, width: UIIconSize, height: 33))
-        
+        let infoButton = UIButton(frame: CGRect(x: xOffset + 50, y: 260 + yPos, width: UIIconSize, height: 33))
         //Design Attributes for all text
         labelHeader.text = data.title
         labelHeader.textColor = UIColor(hue: 246/360, saturation: 11/100, brightness: 47/100, alpha: 1.0)
@@ -96,8 +97,8 @@ class MainSceneController: UIViewController {
         labelContent.textColor = UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0)
         labelContent.font = UIFont(name: "Helvetica", size: 15)
         labelContent.numberOfLines = 8
-        labelContent.sizeToFit()
-        labelContent.lineBreakMode = .byWordWrapping
+        //labelContent.sizeToFit()
+        labelContent.lineBreakMode = .byTruncatingTail
         
         labelTime.text = data.eventTime
         labelTime.textColor = UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0)
@@ -137,6 +138,17 @@ class MainSceneController: UIViewController {
         mapButton.setTitle("Open in Maps", for: .normal)
         mapButton.titleLabel?.font = UIFont(name: "Helvetica",size: 17)
         mapButton.setTitleColor(UIColor(hue: 0.6278, saturation: 0.68, brightness: 0.86, alpha: 1.0), for: .normal)
+        infoButton.backgroundColor = UIColor.clear
+        infoButton.layer.cornerRadius = 15
+        infoButton.layer.borderWidth = 1
+        infoButton.layer.borderColor = UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0).cgColor
+        infoButton.addTarget(self, action: #selector(moreInfo(_:)), for: .touchUpInside)
+        infoButton.tag = tag
+        infoButton.showsTouchWhenHighlighted = true
+        infoButton.setTitleColor(UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0), for: .highlighted)
+        infoButton.setTitle("More Info", for: .normal)
+        infoButton.titleLabel?.font = UIFont(name: "Helvetica",size: 17)
+        infoButton.setTitleColor(UIColor(hue: 211/360, saturation: 15/100, brightness: 70/100, alpha: 1.0), for: .normal)
         
         
         
@@ -171,6 +183,7 @@ class MainSceneController: UIViewController {
         scroller.addSubview(UIlineViewer)
         scroller.addSubview(labelTime)
         scroller.addSubview(mapButton)
+        scroller.addSubview(infoButton)
         scroller.addSubview(calendarButton)
         //Resize content size of UIScrollView
         //Reposition where next image would be
@@ -220,12 +233,39 @@ class MainSceneController: UIViewController {
         self.present(alertcontroller, animated: true,completion: nil)
     }
     
+    //Function to see all info regarding the event
+    //uses an alert window to display everything (Seemed like a simple way to implement 🤷🏻‍♂️)
+    @objc func moreInfo(_ sender: UIButton) {
+        var fullMessage = "Time:\n" + eventData[sender.tag].eventTime + " to " + eventData[sender.tag].endTime + "\n\nDescription:\n" + eventData[sender.tag].content
+        let alertcontroller = UIAlertController(title: eventData[sender.tag].title, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
+        alertcontroller.addAction(UIAlertAction(title: "Close", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Ok logic here")
+        }))
+        self.present(alertcontroller, animated: true,completion: nil)
+    }
+    
     
     //Function to add actual event to the ios calendar
     //makes use of sender for UIButton which is essential to specify which event by ID tag
     //              so we can make the appropriate changes to the calendar.
     //This function requires import EventKit
     @objc func addToCalendar(_ sender: UIButton) {
+        
+        //in the situation and event was added then deleted from calendar
+        //and the user wants to re-add it, then the user is given that option
+        var redo = false
+        if(eventData[sender.tag].hasBeenAdded == true){
+            let alertcontroller = UIAlertController(title: "Hold up!", message: "Event has already been added to Calendar!\nWould you like to add it again?", preferredStyle: UIAlertControllerStyle.alert)
+            alertcontroller.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+                redo = true
+            }))
+            alertcontroller.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
+                redo = false
+            }))
+            self.present(alertcontroller, animated: true,completion: nil)
+        }
+        if(redo == true || eventData[sender.tag].hasBeenAdded == false){
+        eventData[sender.tag].hasBeenAdded = true //Let the program know the event has been added to calendar before
         //date formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, yyyy h:mm a"
@@ -241,5 +281,6 @@ class MainSceneController: UIViewController {
             print("Handle Ok logic here")
         }))
         self.present(alertcontroller, animated: true,completion: nil)
+        }
     }
 }

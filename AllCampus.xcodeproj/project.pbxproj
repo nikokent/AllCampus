@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9B855CFF1F833231007F8931 /* MainSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855CFE1F833231007F8931 /* MainSceneController.swift */; };
-		9B855D011F847E4C007F8931 /* UI-Blank in Resources */ = {isa = PBXBuildFile; fileRef = 9B855D001F847E4C007F8931 /* UI-Blank */; };
 		9B855D0B1F855CC6007F8931 /* SchoolEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855D0A1F855CC6007F8931 /* SchoolEventHandler.swift */; };
 		9B855D0D1F856336007F8931 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855D0C1F856336007F8931 /* Colors.swift */; };
 		9B855D0F1F85A292007F8931 /* externalEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855D0E1F85A292007F8931 /* externalEvents.swift */; };
@@ -22,7 +21,6 @@
 
 /* Begin PBXFileReference section */
 		9B855CFE1F833231007F8931 /* MainSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSceneController.swift; sourceTree = "<group>"; };
-		9B855D001F847E4C007F8931 /* UI-Blank */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "UI-Blank"; sourceTree = "<group>"; };
 		9B855D021F847E55007F8931 /* Line 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Line 1.png"; path = "UI-Blank/Line 1.png"; sourceTree = "<group>"; };
 		9B855D0A1F855CC6007F8931 /* SchoolEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolEventHandler.swift; sourceTree = "<group>"; };
 		9B855D0C1F856336007F8931 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				9B855D121F87E21E007F8931 /* Fonts */,
-				9B855D001F847E4C007F8931 /* UI-Blank */,
 				9BCCCC661F7BF4B700B2222B /* AppDelegate.swift */,
 				9B855D0C1F856336007F8931 /* Colors.swift */,
 				9BCCCC681F7BF4B700B2222B /* ViewController.swift */,
@@ -147,7 +144,6 @@
 				9BCCCC711F7BF4B800B2222B /* LaunchScreen.storyboard in Resources */,
 				9BCCCC6E1F7BF4B800B2222B /* Assets.xcassets in Resources */,
 				9BCCCC6C1F7BF4B700B2222B /* Main.storyboard in Resources */,
-				9B855D011F847E4C007F8931 /* UI-Blank in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

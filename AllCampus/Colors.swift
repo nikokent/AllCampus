@@ -53,6 +53,11 @@ extension UIImageView
 
 class ColorsHandler{
     
+    //returns a UIColor of passed in hex value
+    func getHexColor(hex: String) -> UIColor{
+        return hex.hexColor
+    }
+    
     
     func getLoveGradient() -> CAGradientLayer {
         let topColor = UIColor(red: 0.6902, green: 0.4157, blue: 0.702, alpha: 1.0)
