@@ -74,8 +74,8 @@ class MainSceneController: UIViewController {
         let UIlineViewer = UIImageView(frame: CGRect(x: xOffset + 41, y: 117 + yPos, width: 200, height: 1.5))
         let UILineImage = UIImage(named: "Line 1")
         let labelHeader = UILabel(frame: CGRect(x: xOffset, y: 73 + yPos, width: 283, height: 50))
-        let labelContent = UILabel(frame: CGRect(x: xOffset + 39, y: 160 + yPos, width: 200, height: 100))
-        let labelTime = UILabel(frame: CGRect(x: xOffset + 39, y: 135 + yPos, width: 200, height: 80))
+        let labelContent = UILabel(frame: CGRect(x: xOffset + 45, y: 160 + yPos, width: 200, height: 100))
+        let labelTime = UILabel(frame: CGRect(x: xOffset + 52, y: 135 + yPos, width: 200, height: 80))
         var calendarImage = UIImage(named: "purpleButton")
         let calendarButton = UIButton(frame: CGRect(x: xOffset + 50, y: 300 + yPos, width: UIIconSize, height: 33))
         var mapImage = UIImage(named: "blueButton")
@@ -250,12 +250,13 @@ class MainSceneController: UIViewController {
     //              so we can make the appropriate changes to the calendar.
     //This function requires import EventKit
     @objc func addToCalendar(_ sender: UIButton) {
-        
+        let defaults = UserDefaults.standard
         //in the situation and event was added then deleted from calendar
         //and the user wants to re-add it, then the user is given that option
         var redo = false
-        if(eventData[sender.tag].hasBeenAdded == true){
-            let alertcontroller = UIAlertController(title: "Hold up!", message: "Event has already been added to Calendar!\nWould you like to add it again?", preferredStyle: UIAlertControllerStyle.alert)
+        if(defaults.bool(forKey: eventData[sender.tag].title + eventData[sender.tag].eventTime) == true){
+            var fullMessage = eventData[sender.tag].title + " has already been added to your Calendar!\nWould you like us to schedule this again?"
+            let alertcontroller = UIAlertController(title: "Hold up!", message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
             alertcontroller.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
                 redo = true
             }))
@@ -264,8 +265,22 @@ class MainSceneController: UIViewController {
             }))
             self.present(alertcontroller, animated: true,completion: nil)
         }
+        //if uses requests a readd or if event has never been added
+        //then follows adding event to calendar
         if(redo == true || eventData[sender.tag].hasBeenAdded == false){
-        eventData[sender.tag].hasBeenAdded = true //Let the program know the event has been added to calendar before
+            /*
+             This code below is setup to save in the device each event the user goes to
+             I am debating wether or not this info is necessary and should be saved in device.
+             
+            if(defaults.bool(forKey: "CalendarSetup") == false || defaults.bool(forKey: "CalendarSetup") == nil){
+                defaults.set(true, forKey: "CalendarSetup")
+                defaults.set(0,forKey: "eventIndex")
+                var makeKey = "eventNum" + String(describing: defaults.string(forKey: "eventIndex"))
+                defaults.setValue(eventData[sender.tag], forKey: makeKey)
+            }
+             */
+        defaults.set(true, forKey: eventData[sender.tag].title + eventData[sender.tag].eventTime)
+        eventData[sender.tag].hasBeenAdded = true //Let the program know the event has been added to calendar
         //date formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, yyyy h:mm a"
