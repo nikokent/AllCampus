@@ -43,10 +43,10 @@ class MainSceneController: UIViewController {
         BottomMenuBar.addBlurEffect()
         
         //3 test objects
-        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0, EventType: 1))
-        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0, EventType: 2))
-        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0, EventType: 3))
-        eventData.append(postedEventData(title:"Pullman Farmer's Market", content: "Downtown Pullman will be having a Farmer's market! There will be plenty of stalls with Local Produce, Clothing, and More. There will be live music and plenty of fun for the whole family! See you there 🐮", eventTime: "Nov 5, 2017 8:00 am", endTime: "Nov 5, 2017 2:00 pm" , tagData: 0, EventType: 4))
+        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0, EventType: 1, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
+        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0, EventType: 2, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
+        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0, EventType: 3, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
+        eventData.append(postedEventData(title:"Pullman Farmer's Market", content: "Downtown Pullman will be having a Farmer's market! There will be plenty of stalls with Local Produce, Clothing, and More. There will be live music and plenty of fun for the whole family! See you there 🐮", eventTime: "Nov 5, 2017 8:00 am", endTime: "Nov 5, 2017 2:00 pm" , tagData: 0, EventType: 4, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
         
         //loop index in for-in loop
         //loop iterates through event data and adds each event to scrollView
@@ -131,7 +131,7 @@ class MainSceneController: UIViewController {
         mapButton.layer.cornerRadius = 15
         mapButton.layer.borderWidth = 1
         mapButton.layer.borderColor = UIColor(hue: 0.6278, saturation: 0.68, brightness: 0.86, alpha: 1.0).cgColor
-        mapButton.addTarget(self, action: #selector(doStuff), for: .touchUpInside)
+        mapButton.addTarget(self, action: #selector(openMaps(_:)), for: .touchUpInside)
         mapButton.tag = tag
         mapButton.showsTouchWhenHighlighted = true
         mapButton.setTitleColor(UIColor(hue: 0.6278, saturation: 0.68, brightness: 0.86, alpha: 0.6), for: .highlighted)
@@ -236,12 +236,22 @@ class MainSceneController: UIViewController {
     //Function to see all info regarding the event
     //uses an alert window to display everything (Seemed like a simple way to implement 🤷🏻‍♂️)
     @objc func moreInfo(_ sender: UIButton) {
-        var fullMessage = "Time:\n" + eventData[sender.tag].eventTime + " to " + eventData[sender.tag].endTime + "\n\nDescription:\n" + eventData[sender.tag].content
+        var fullMessage = "Time:\n" + eventData[sender.tag].eventTime + " to " + eventData[sender.tag].endTime + "\n\nDescription:\n" + eventData[sender.tag].content + "\n\nLocation:\n" + eventData[sender.tag].location
         let alertcontroller = UIAlertController(title: eventData[sender.tag].title, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
         alertcontroller.addAction(UIAlertAction(title: "Close", style: .cancel, handler: { (action: UIAlertAction!) in
             print("Handle Ok logic here")
         }))
         self.present(alertcontroller, animated: true,completion: nil)
+    }
+    
+    //Function to open apple maps to the location assigned for the event
+    //Uses a native api for maps.apple.com which opens the iOS native Maps app
+    @objc func openMaps(_ sender: UIButton) {
+        //safe string is needed to remove any pre insterted commas and replace spaces with commas
+        //reason for this is due to needing a url safe web address
+        var safeString = eventData[sender.tag].location.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: " ", with: ",")
+        var address = "http://maps.apple.com/?address=" + safeString
+        UIApplication.shared.openURL(URL(string: address)!)
     }
     
     
@@ -268,17 +278,7 @@ class MainSceneController: UIViewController {
         //if uses requests a readd or if event has never been added
         //then follows adding event to calendar
         if(redo == true || eventData[sender.tag].hasBeenAdded == false){
-            /*
-             This code below is setup to save in the device each event the user goes to
-             I am debating wether or not this info is necessary and should be saved in device.
-             
-            if(defaults.bool(forKey: "CalendarSetup") == false || defaults.bool(forKey: "CalendarSetup") == nil){
-                defaults.set(true, forKey: "CalendarSetup")
-                defaults.set(0,forKey: "eventIndex")
-                var makeKey = "eventNum" + String(describing: defaults.string(forKey: "eventIndex"))
-                defaults.setValue(eventData[sender.tag], forKey: makeKey)
-            }
-             */
+            //Defaults saves in the device that the event with a certain title and date has already been added before!
         defaults.set(true, forKey: eventData[sender.tag].title + eventData[sender.tag].eventTime)
         eventData[sender.tag].hasBeenAdded = true //Let the program know the event has been added to calendar
         //date formatter
@@ -290,7 +290,7 @@ class MainSceneController: UIViewController {
         //event handler from "externalEvents.swift"
         //sender.tag is given in loadview() and passed in at add object
         let eventHandler = ExternalEventHandler()
-        eventHandler.addEventToCalendar(title: eventData[sender.tag].title, description: eventData[sender.tag].content, startDate: StartDate!, endDate: EndDate!, completion: nil)
+            eventHandler.addEventToCalendar(title: eventData[sender.tag].title, description: eventData[sender.tag].content + "\n" + "Location: " + eventData[sender.tag].location, startDate: StartDate!, endDate: EndDate!, completion: nil)
         let alertcontroller = UIAlertController(title: eventData[sender.tag].title, message: "has been added to your calendar!\n\(eventData[sender.tag].eventTime)", preferredStyle: UIAlertControllerStyle.alert)
         alertcontroller.addAction(UIAlertAction(title: "close", style: .default, handler: { (action: UIAlertAction!) in
             print("Handle Ok logic here")

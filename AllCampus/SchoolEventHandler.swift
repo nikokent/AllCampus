@@ -22,13 +22,15 @@ struct postedEventData {
     var tagData: Int
     var hasBeenAdded = false
     let EventType: Int
-    init(title: String, content: String, eventTime: String, endTime: String, tagData: Int, EventType: Int){
+    let location: String
+    init(title: String, content: String, eventTime: String, endTime: String, tagData: Int, EventType: Int, location: String){
         self.title = title
         self.content = content
         self.eventTime = eventTime
         self.endTime = endTime
         self.tagData = tagData
         self.EventType = EventType
+        self.location = location
     }
 };
 
