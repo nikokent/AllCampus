@@ -308,7 +308,23 @@ class MainSceneController: UIViewController {
             var fullMessage = eventData[sender.tag].title + " has already been added to your Calendar!\nWould you like us to schedule this again?"
             let alertcontroller = UIAlertController(title: "Hold up!", message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
             alertcontroller.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
-                redo = true
+                defaults.set(true, forKey: self.eventData[sender.tag].title + self.eventData[sender.tag].eventTime)
+                self.eventData[sender.tag].hasBeenAdded = true //Let the program know the event has been added to calendar
+                //date formatter
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMM d, yyyy h:mm a"
+                let StartDate = formatter.date(from: self.eventData[sender.tag].eventTime)
+                let EndDate = formatter.date(from: self.eventData[sender.tag].endTime)
+                
+                //event handler from "externalEvents.swift"
+                //sender.tag is given in loadview() and passed in at add object
+                let eventHandler = ExternalEventHandler()
+                eventHandler.addEventToCalendar(title: self.eventData[sender.tag].title, description: self.eventData[sender.tag].content + "\n" + "Location: " + self.eventData[sender.tag].location, startDate: StartDate!, endDate: EndDate!, completion: nil)
+                let alertcontroller = UIAlertController(title: self.eventData[sender.tag].title, message: "has been added to your calendar!\n\(self.eventData[sender.tag].eventTime)", preferredStyle: UIAlertControllerStyle.alert)
+                alertcontroller.addAction(UIAlertAction(title: "close", style: .default, handler: { (action: UIAlertAction!) in
+                    print("Handle Ok logic here")
+                }))
+                self.present(alertcontroller, animated: true,completion: nil)
             }))
             alertcontroller.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction!) in
                 redo = false
@@ -317,7 +333,7 @@ class MainSceneController: UIViewController {
         }
         //if uses requests a readd or if event has never been added
         //then follows adding event to calendar
-        if(redo == true || eventData[sender.tag].hasBeenAdded == false){
+        else if(redo == true || eventData[sender.tag].hasBeenAdded == false){
             //Defaults saves in the device that the event with a certain title and date has already been added before!
         defaults.set(true, forKey: eventData[sender.tag].title + eventData[sender.tag].eventTime)
         eventData[sender.tag].hasBeenAdded = true //Let the program know the event has been added to calendar
