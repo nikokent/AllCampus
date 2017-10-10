@@ -10,15 +10,19 @@ import UIKit
 import EventKit
 
 class MainSceneController: UIViewController {
+    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var labelEventType: UILabel!
     @IBOutlet weak var scroller: UIScrollView!
     @IBOutlet weak var BottomMenuBar: UIImageView!
+    @IBOutlet weak var allBtn: UIButton!
+    @IBOutlet weak var SchoolBtn: UIButton!
     
     //Stores the offset of y position between each flier
     var yPos = 0.0
     var xOffset = 0.0
     var UIIconSize = 186.0
     var eventData = [postedEventData]()
-   
+    var totalLayers:UInt32 = 0
     
     override func viewDidLoad() {
         
@@ -26,10 +30,16 @@ class MainSceneController: UIViewController {
         //it will be a sublayer of the main view however!
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
-        gradientLayer = gradient.getLoveGradient()
-        gradientLayer.frame = scroller.frame
+        gradientLayer = gradient.getSweetMorningGradient()
+        gradientLayer.frame = scroller.bounds
         scroller.backgroundColor = .clear
         self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        labelEventType.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+        labelEventType.frame = CGRect(x: 0, y: Double(self.mainView.frame.height/2), width: 50, height: 40)
+        labelEventType.text = "All Events"
+        labelEventType.textColor = .white
+        labelEventType.sizeToFit()
         
         //offset of object to the right
         //made to change based off of device screen width
@@ -84,12 +94,7 @@ class MainSceneController: UIViewController {
         //Design Attributes for all text
         labelHeader.text = data.title
         labelHeader.textColor = UIColor(hue: 246/360, saturation: 11/100, brightness: 47/100, alpha: 1.0)
-        
-        //these changes are for purple color with shadow underglow
-        //labelHeader.textColor = UIColor(hue: 0.7389, saturation: 0.41, brightness: 0.73, alpha: 1.0)
-       // labelHeader.layer.shadowRadius = 0.7
-       // labelHeader.layer.shadowOpacity = 0.5
-        //labelHeader.layer.shadowOffset = CGSize(width: 0.7, height: 0.7)
+    
         labelHeader.font = UIFont(name: "Helvetica Bold", size: 30)
         labelHeader.textAlignment = .center
         
@@ -192,6 +197,40 @@ class MainSceneController: UIViewController {
         
     }
     
+    //Adds all objects to the screen of specific type
+    func buildObjects(type: Int){
+        print("BUILDING")
+        yPos = 0
+        var i = 0
+        if(type == 0){
+            for _ in 1...eventData.count{
+                    eventData[i].tagData = i
+                    addObject(data: eventData[i], tag: i)
+                    i += 1
+                
+            }
+        }
+        else{
+        for _ in 1...eventData.count{
+            print(eventData[i].EventType)
+                if(eventData[i].EventType == type){
+                    eventData[i].tagData = i
+                    addObject(data: eventData[i], tag: i)
+                    print("type is \(type)")
+                }
+            i += 1
+            }
+        }
+    }
+    
+    //Removes all objects
+    func removeObjects(){
+        while let subview = scroller.subviews.last {
+            subview.removeFromSuperview()
+        }
+    }
+    
+    
     
     //function to resize image!
     //Taken from stack overflow
@@ -240,6 +279,7 @@ class MainSceneController: UIViewController {
         let alertcontroller = UIAlertController(title: eventData[sender.tag].title, message: fullMessage, preferredStyle: UIAlertControllerStyle.alert)
         alertcontroller.addAction(UIAlertAction(title: "Close", style: .cancel, handler: { (action: UIAlertAction!) in
             print("Handle Ok logic here")
+            //self.removeObjects()
         }))
         self.present(alertcontroller, animated: true,completion: nil)
     }
@@ -297,5 +337,61 @@ class MainSceneController: UIViewController {
         }))
         self.present(alertcontroller, animated: true,completion: nil)
         }
+    }
+    @IBAction func AllSelected(_ sender: Any) {
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getSweetMorningGradient()
+        gradientLayer.frame = scroller.bounds
+        scroller.backgroundColor = .clear
+        totalLayers += 1
+        self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
+        removeObjects()
+        buildObjects(type: 0)
+    }
+    @IBAction func schoolSelected(_ sender: Any) {
+        //self.view.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getHoneydewGradient()
+        gradientLayer.frame = scroller.bounds
+        scroller.backgroundColor = .clear
+        totalLayers += 1
+        self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
+        removeObjects()
+        buildObjects(type: 1)
+    }
+    @IBAction func PartiesSelected(_ sender: Any) {
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getLoveGradient()
+        gradientLayer.frame = scroller.bounds
+        scroller.backgroundColor = .clear
+        totalLayers += 1
+        self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
+        removeObjects()
+        buildObjects(type: 2)
+    }
+    @IBAction func GreekSelected(_ sender: Any) {
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getRoseGradient()
+        gradientLayer.frame = scroller.bounds
+        scroller.backgroundColor = .clear
+        totalLayers += 1
+        self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
+        removeObjects()
+        buildObjects(type: 3)
+    }
+    @IBAction func MiscSelected(_ sender: Any) {
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getTranquilGradient()
+        gradientLayer.frame = scroller.bounds
+        scroller.backgroundColor = .clear
+        totalLayers += 1
+        self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
+        removeObjects()
+        buildObjects(type: 4)
     }
 }

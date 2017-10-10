@@ -72,8 +72,8 @@ class ColorsHandler{
     }
     
     func getRoseGradient() -> CAGradientLayer {
-        let topColor = "#FFAFBD".hexColor
-        let bottomColor = "#ffc3a0".hexColor
+        let topColor = "#ffc3a0".hexColor
+        let bottomColor = "#FFAFBD".hexColor
         
         let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
         let gradientLocation: [Float] = [0.0, 1.0]
@@ -82,6 +82,43 @@ class ColorsHandler{
         gradientLayer.colors = gradientColors
         return gradientLayer
     }
+    
+    func getHoneydewGradient() -> CAGradientLayer {
+        let topColor = "#F8FFAE".hexColor
+        let bottomColor = "#43C6AC".hexColor
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocation: [Float] = [0.0, 1.0]
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.locations = gradientLocation as [NSNumber]
+        gradientLayer.colors = gradientColors
+        return gradientLayer
+    }
+    
+    func getSweetMorningGradient() -> CAGradientLayer {
+        let topColor = "#FFC371".hexColor
+        let bottomColor = "#FF5F6D".hexColor
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocation: [Float] = [0.0, 1.0]
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.locations = gradientLocation as [NSNumber]
+        gradientLayer.colors = gradientColors
+        return gradientLayer
+    }
+    
+    func getTranquilGradient() -> CAGradientLayer {
+        let topColor = "#EECDA3".hexColor
+        let bottomColor = "#4DA0B0".hexColor
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocation: [Float] = [0.0, 1.0]
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.locations = gradientLocation as [NSNumber]
+        gradientLayer.colors = gradientColors
+        return gradientLayer
+    }
+    
     
     /*EXAMPLE IMPLEMENTATION
      var gradient = ColorsHandler()

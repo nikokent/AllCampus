@@ -12,6 +12,14 @@ import UIKit
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
+        
+        var gradient = ColorsHandler()
+        var gradientLayer: CAGradientLayer
+        gradientLayer = gradient.getRoseGradient()
+        gradientLayer.frame = self.view.frame
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
