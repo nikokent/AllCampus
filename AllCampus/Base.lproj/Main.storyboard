@@ -123,14 +123,14 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1PD-TF-BlC">
                                 <rect key="frame" x="139" y="634" width="96" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Add Event">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="MiscSelected:" destination="WW6-5N-Ljz" eventType="touchUpInside" id="vJJ-b0-U49"/>
-                                    <segue destination="9Gs-KE-4tH" kind="show" id="bdZ-JD-LT1"/>
+                                    <segue destination="9Gs-KE-4tH" kind="show" id="3ie-ji-mIJ"/>
                                 </connections>
                             </button>
                         </subviews>
