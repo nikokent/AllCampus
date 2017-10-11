@@ -16,6 +16,9 @@ class MainSceneController: UIViewController {
     @IBOutlet weak var BottomMenuBar: UIImageView!
     @IBOutlet weak var allBtn: UIButton!
     @IBOutlet weak var SchoolBtn: UIButton!
+    @IBOutlet weak var partyBTN: UIButton!
+    @IBOutlet weak var GreekBtn: UIButton!
+    @IBOutlet weak var MiscBTN: UIButton!
     
     //Stores the offset of y position between each flier
     var yPos = 0.0
@@ -23,9 +26,11 @@ class MainSceneController: UIViewController {
     var UIIconSize = 186.0
     var eventData = [postedEventData]()
     var totalLayers:UInt32 = 0
-    
+    var xOffsetButtons: CGFloat = 0.0
     override func viewDidLoad() {
-        
+        adjustButtons()
+        allBtn.frame.origin.x += 20
+        xOffsetButtons = 2
         //Gradient Implementation will stay in the background at the size of the scrollview
         //it will be a sublayer of the main view however!
         var gradient = ColorsHandler()
@@ -43,14 +48,22 @@ class MainSceneController: UIViewController {
         
         //offset of object to the right
         //made to change based off of device screen width
-        xOffset = Double(self.view.frame.width * 0.22)
-        if(Double(self.view.frame.width) < 350){
-            xOffset = Double(self.view.frame.width * 0.1)
+        //xOffset = Double(self.view.frame.width * 0.22)
+       // if(Double(self.view.frame.width) < 350){
+        xOffset = Double(self.view.frame.width - 290)
+       // }
+        print(self.view.frame.width)
+        if(self.view.frame.width <= 330){
+            allBtn.isHidden = true
+            SchoolBtn.isHidden = true
+            partyBTN.isHidden = true
+            GreekBtn.isHidden = true
+            MiscBTN.isHidden = true
         }
-        
-        //bottom Menu Bar Design
+        //bottom Menu Bar styling
         BottomMenuBar.backgroundColor = UIColor.black
         BottomMenuBar.addBlurEffect()
+       
         
         //3 test objects
         eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0, EventType: 1, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
@@ -58,6 +71,17 @@ class MainSceneController: UIViewController {
         eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0, EventType: 3, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
         eventData.append(postedEventData(title:"Pullman Farmer's Market", content: "Downtown Pullman will be having a Farmer's market! There will be plenty of stalls with Local Produce, Clothing, and More. There will be live music and plenty of fun for the whole family! See you there 🐮", eventTime: "Nov 5, 2017 8:00 am", endTime: "Nov 5, 2017 2:00 pm" , tagData: 0, EventType: 4, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
         
+        
+        //bubble sort for eventData sorting by date, I recognize n^2 is not optimal time, so this is temporary
+        var outer = 0
+        var inner = 0
+        for _ in 1...eventData.count{
+            for _ in 1...eventData.count{
+                
+                inner += 1
+            }
+            outer += 1
+        }
         //loop index in for-in loop
         //loop iterates through event data and adds each event to scrollView
         var i = 0
@@ -355,6 +379,8 @@ class MainSceneController: UIViewController {
         }
     }
     @IBAction func AllSelected(_ sender: Any) {
+        removeObjects()
+        buildObjects(type: 0)
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
         gradientLayer = gradient.getSweetMorningGradient()
@@ -362,10 +388,13 @@ class MainSceneController: UIViewController {
         scroller.backgroundColor = .clear
         totalLayers += 1
         self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
-        removeObjects()
-        buildObjects(type: 0)
+        adjustButtons()
+        allBtn.frame.origin.x += 20
+        
     }
     @IBAction func schoolSelected(_ sender: Any) {
+        removeObjects()
+        buildObjects(type: 1)
         //self.view.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
@@ -374,10 +403,13 @@ class MainSceneController: UIViewController {
         scroller.backgroundColor = .clear
         totalLayers += 1
         self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
-        removeObjects()
-        buildObjects(type: 1)
+        adjustButtons()
+        SchoolBtn.frame.origin.x += 15
+        
     }
     @IBAction func PartiesSelected(_ sender: Any) {
+        removeObjects()
+        buildObjects(type: 2)
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
         gradientLayer = gradient.getLoveGradient()
@@ -385,10 +417,12 @@ class MainSceneController: UIViewController {
         scroller.backgroundColor = .clear
         totalLayers += 1
         self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
-        removeObjects()
-        buildObjects(type: 2)
+        adjustButtons()
+        partyBTN.frame.origin.x += 15
     }
     @IBAction func GreekSelected(_ sender: Any) {
+        removeObjects()
+        buildObjects(type: 3)
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
         gradientLayer = gradient.getRoseGradient()
@@ -396,10 +430,12 @@ class MainSceneController: UIViewController {
         scroller.backgroundColor = .clear
         totalLayers += 1
         self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
-        removeObjects()
-        buildObjects(type: 3)
+        adjustButtons()
+        GreekBtn.frame.origin.x += 15
     }
     @IBAction func MiscSelected(_ sender: Any) {
+        removeObjects()
+        buildObjects(type: 4)
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
         gradientLayer = gradient.getTranquilGradient()
@@ -407,7 +443,22 @@ class MainSceneController: UIViewController {
         scroller.backgroundColor = .clear
         totalLayers += 1
         self.view.layer.insertSublayer(gradientLayer, at: totalLayers)
-        removeObjects()
-        buildObjects(type: 4)
+        adjustButtons()
+        MiscBTN.frame.origin.x += 15
     }
+    
+    //adjusts buttons back into original sliding position
+    func adjustButtons(){
+        allBtn.frame.origin.x = xOffsetButtons
+        allBtn.contentHorizontalAlignment = .left
+        SchoolBtn.frame.origin.x = xOffsetButtons
+        SchoolBtn.contentHorizontalAlignment = .left
+        partyBTN.frame.origin.x = xOffsetButtons
+        partyBTN.contentHorizontalAlignment = .left
+        GreekBtn.frame.origin.x = xOffsetButtons
+        GreekBtn.contentHorizontalAlignment = .left
+        MiscBTN.frame.origin.x = xOffsetButtons
+        MiscBTN.contentHorizontalAlignment = .left
+    }
+    
 }

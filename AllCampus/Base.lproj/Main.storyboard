@@ -62,12 +62,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWZ-is-NiZ">
-                                <rect key="frame" x="0.0" y="632" width="375" height="35"/>
+                                <rect key="frame" x="0.0" y="625" width="375" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DAC-SJ-jOn">
-                                <rect key="frame" x="16" y="392" width="46" height="30"/>
+                                <rect key="frame" x="2" y="392" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="All">
@@ -78,7 +78,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PzK-st-CGG">
-                                <rect key="frame" x="7" y="430" width="64" height="30"/>
+                                <rect key="frame" x="2" y="430" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="School">
@@ -89,7 +89,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwF-ri-5a8">
-                                <rect key="frame" x="7" y="468" width="64" height="30"/>
+                                <rect key="frame" x="2" y="468" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Parties">
@@ -100,7 +100,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vG-HT-Txb">
-                                <rect key="frame" x="7" y="506" width="64" height="30"/>
+                                <rect key="frame" x="2" y="506" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Greek">
@@ -111,7 +111,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5B-Tm-fGd">
-                                <rect key="frame" x="7" y="544" width="64" height="30"/>
+                                <rect key="frame" x="2" y="544" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Misc">
@@ -122,7 +122,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1PD-TF-BlC">
-                                <rect key="frame" x="139" y="634" width="96" height="30"/>
+                                <rect key="frame" x="139" y="631" width="96" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Add Event">
@@ -144,10 +144,13 @@
                     </view>
                     <connections>
                         <outlet property="BottomMenuBar" destination="GWZ-is-NiZ" id="zrh-xc-1CH"/>
+                        <outlet property="GreekBtn" destination="4vG-HT-Txb" id="rde-1F-ubE"/>
+                        <outlet property="MiscBTN" destination="t5B-Tm-fGd" id="Wgz-MH-9TX"/>
                         <outlet property="SchoolBtn" destination="PzK-st-CGG" id="Akc-Ug-fnv"/>
                         <outlet property="allBtn" destination="DAC-SJ-jOn" id="lrr-FI-z5u"/>
                         <outlet property="labelEventType" destination="jzw-1k-BlL" id="o9O-X1-vjS"/>
                         <outlet property="mainView" destination="X7h-RX-aeJ" id="uvy-Pn-qYD"/>
+                        <outlet property="partyBTN" destination="kwF-ri-5a8" id="qqr-ED-glu"/>
                         <outlet property="scroller" destination="X7h-RX-aeJ" id="ckV-Oc-KIu"/>
                     </connections>
                 </viewController>
