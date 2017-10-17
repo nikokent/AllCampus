@@ -18,7 +18,8 @@ class ViewController: UIViewController {
         gradientLayer = gradient.getRoseGradient()
         gradientLayer.frame = self.view.frame
         self.view.layer.insertSublayer(gradientLayer, at: 0)
-        
+        var builder = EventBuilder()
+        builder.getEvents()
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

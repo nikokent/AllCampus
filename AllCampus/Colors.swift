@@ -119,6 +119,17 @@ class ColorsHandler{
         return gradientLayer
     }
     
+    func getBoraBoraGradient() -> CAGradientLayer {
+        let topColor = "#EAECC6".hexColor
+        let bottomColor = "#2BC0E4".hexColor
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocation: [Float] = [0.0, 1.0]
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.locations = gradientLocation as [NSNumber]
+        gradientLayer.colors = gradientColors
+        return gradientLayer
+    }
     
     /*EXAMPLE IMPLEMENTATION
      var gradient = ColorsHandler()

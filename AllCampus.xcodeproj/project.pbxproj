@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B2E90091F8E93D200D5AD2E /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E90081F8E93D100D5AD2E /* CreateEventViewController.swift */; };
 		9B855CFF1F833231007F8931 /* MainSceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855CFE1F833231007F8931 /* MainSceneController.swift */; };
 		9B855D0B1F855CC6007F8931 /* SchoolEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855D0A1F855CC6007F8931 /* SchoolEventHandler.swift */; };
 		9B855D0D1F856336007F8931 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B855D0C1F856336007F8931 /* Colors.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B2E90081F8E93D100D5AD2E /* CreateEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		9B855CFE1F833231007F8931 /* MainSceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSceneController.swift; sourceTree = "<group>"; };
 		9B855D021F847E55007F8931 /* Line 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Line 1.png"; path = "UI-Blank/Line 1.png"; sourceTree = "<group>"; };
 		9B855D0A1F855CC6007F8931 /* SchoolEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolEventHandler.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				9BCCCC661F7BF4B700B2222B /* AppDelegate.swift */,
 				9B855D0C1F856336007F8931 /* Colors.swift */,
 				9BCCCC681F7BF4B700B2222B /* ViewController.swift */,
+				9B2E90081F8E93D100D5AD2E /* CreateEventViewController.swift */,
 				9BCCCC6A1F7BF4B700B2222B /* Main.storyboard */,
 				9BCCCC6D1F7BF4B800B2222B /* Assets.xcassets */,
 				9B855D021F847E55007F8931 /* Line 1.png */,
@@ -157,6 +160,7 @@
 				9BCCCC691F7BF4B700B2222B /* ViewController.swift in Sources */,
 				9B855D0F1F85A292007F8931 /* externalEvents.swift in Sources */,
 				9B855D0D1F856336007F8931 /* Colors.swift in Sources */,
+				9B2E90091F8E93D200D5AD2E /* CreateEventViewController.swift in Sources */,
 				9B855CFF1F833231007F8931 /* MainSceneController.swift in Sources */,
 				9BCCCC671F7BF4B700B2222B /* AppDelegate.swift in Sources */,
 				9B855D0B1F855CC6007F8931 /* SchoolEventHandler.swift in Sources */,

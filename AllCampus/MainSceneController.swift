@@ -65,18 +65,26 @@ class MainSceneController: UIViewController {
         BottomMenuBar.addBlurEffect()
        
         
-        //3 test objects
-        eventData.append(postedEventData(title:"VCEA Career Expo", content: "An awesome oppurtunity to network and share resumes with industry representatives that can give you an internship.",eventTime: "Oct 28, 2017 10:30 am",endTime: "Oct 28, 2017 3:30 pm" , tagData: 0, EventType: 1, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
-        eventData.append(postedEventData(title:"Kickback at our place", content: "Bring your own drinks. We are grilling burgers and have music setup.",eventTime: "Oct 27, 2017 8:30 pm",endTime: "Oct 27, 2017 11:30 pm" , tagData: 0, EventType: 2, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
-        eventData.append(postedEventData(title:"Party At AKL!", content: "Full on rager at AKL tonight. Girls bring your friends! It'll be lit! 🔥", eventTime: "Oct 30, 2017 11:00 pm", endTime: "Oct 31, 2017 2:00 am" , tagData: 0, EventType: 3, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
-        eventData.append(postedEventData(title:"Pullman Farmer's Market", content: "Downtown Pullman will be having a Farmer's market! There will be plenty of stalls with Local Produce, Clothing, and More. There will be live music and plenty of fun for the whole family! See you there 🐮", eventTime: "Nov 5, 2017 8:00 am", endTime: "Nov 5, 2017 2:00 pm" , tagData: 0, EventType: 4, location: "710 SE Chinook Dr apt K51, 99163, Pullman WA"))
-        
+        //Builds the list of events from our EventBuilder class
+        var builder = EventBuilder()
+        eventData = builder.testEvents()
         
         //bubble sort for eventData sorting by date, I recognize n^2 is not optimal time, so this is temporary
         var outer = 0
         var inner = 0
         for _ in 1...eventData.count{
+            inner = 0
             for _ in 1...eventData.count{
+                
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMM d, yyyy h:mm a"
+                let date1 = formatter.date(from: eventData[inner].eventTime)
+                let date2 = formatter.date(from: eventData[outer].eventTime)
+                if(date2! < date1!){
+                    var temp = eventData[inner]
+                    eventData[inner] = eventData[outer]
+                    eventData[outer] = temp
+                }
                 
                 inner += 1
             }
