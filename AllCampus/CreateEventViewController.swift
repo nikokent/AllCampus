@@ -18,11 +18,21 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
     @IBOutlet weak var TitleField: UITextField!
     @IBOutlet weak var ContinueBtn: UIButton!
     @IBOutlet weak var DescriptionField: UITextView!
+    @IBOutlet weak var DateSelect: UIDatePicker!
     
     var xOffsetButtons: CGFloat = 0.0
     var eventStage = 0 //keep track of what stage of information is being added
-    
+    var restart = false
+    var eventTitle: String = ""
+    var eventContent: String = ""
+    var eventLocation: String = ""
+    var eventType: Int = 0
+    var eventStartTime: String = ""
+    var eventEndTime: String = ""
     override func viewDidLoad() {
+        var tempDate = Date()
+        DateSelect.minimumDate = Date()
+        DateSelect.maximumDate = tempDate.addMonth(n: 1)
         TitleField.backgroundColor = UIColor.clear
         hideAll()
         
@@ -44,14 +54,17 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         self.view.layer.insertSublayer(gradientLayer, at: 0)
         
         //Button styling
+        /*
         SchoolBtn.contentHorizontalAlignment = .right
         PartyBtn.contentHorizontalAlignment = .right
         GreekBtn.contentHorizontalAlignment = .right
         MiscBtn.contentHorizontalAlignment = .right
+         */
         SchoolBtn.frame.origin.x = xOffsetButtons
         PartyBtn.frame.origin.x = xOffsetButtons
         GreekBtn.frame.origin.x = xOffsetButtons
         MiscBtn.frame.origin.x = xOffsetButtons
+        DescriptionField.layer.cornerRadius = 10
         
     }
 
@@ -66,8 +79,17 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         return false
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
+        if(restart == false){
         DescriptionField.text = ""
+            restart = true
+        }
         ContinueBtn.isHidden = false
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if(DescriptionField.text.characters.last == "\n"){
+            self.view.endEditing(true)
+        }
     }
     
     func moveButtons(){
@@ -86,24 +108,28 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         titleEvent()
     }
     @IBAction func SchoolSelect(_ sender: Any) {
+        eventType = 1
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
             self.HeaderLabel.text = "Let's Plan This School Event!"
         }, completion: nil)
     }
     @IBAction func PartySelect(_ sender: Any) {
+        eventType = 2
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
             self.HeaderLabel.text = "Let's\nThrow\nA Party."
         }, completion: nil)
     }
     @IBAction func GreekSelect(_ sender: Any) {
+        eventType = 3
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
             self.HeaderLabel.text = "Let's Plan\nThis Greek Event!"
         }, completion: nil)
     }
     @IBAction func MiscSelect(_ sender: Any) {
+        eventType = 4
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
             self.HeaderLabel.text = "Let's Plan\nThis Community Event!"
@@ -111,10 +137,12 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         
     }
     @IBAction func RestartSelect(_ sender: Any) {
-        self.viewDidLoad()
-        self.viewWillAppear(true)
+        restart = false
         TitleField.text = ""
         eventStage = 0
+        self.viewDidLoad()
+        self.viewWillAppear(true)
+        
     }
     
     func titleEvent(){
@@ -126,24 +154,65 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         TitleField.isHidden = true
         TitleLabel.isHidden = true
         DescriptionField.isHidden = true
+        DateSelect.isHidden = true
     }
     @IBAction func ContinueSelect(_ sender: Any) {
-        eventStage += 1
-        self.view.endEditing(true)
-        TitleField.text = ""
-        if(eventStage == 1)
-        {
-            TitleLabel.text = "Perfect, Now lets write a good description of your event 🎉"
-            DescriptionField.isHidden = false
-            TitleField.isHidden = true
-        }
-        if(eventStage == 2)
-        {
-            TitleLabel.text = "Nice, Now lets tell everyone where to meet!"
-            DescriptionField.isHidden = true
-            TitleField.isHidden = false
-            TitleField.placeholder = "1234 NE D ST, 99164, Pullman, WA"
+        if(TitleField.text != "" || eventStage == 1){
+            eventStage += 1
+            self.view.endEditing(true)
+            
+            if(eventStage == 1)
+            {
+                    eventTitle = TitleField.text!
+                    TitleField.text = ""
+                    TitleLabel.text = "Perfect, Now lets write a good description of your event 🎉"
+                    DescriptionField.isHidden = false
+                    TitleField.isHidden = true
+            }
+            if(eventStage == 2)
+            {
+                eventContent = DescriptionField.text
+                TitleLabel.text = "Nice, Now lets tell everyone where to meet! 🏠"
+                DescriptionField.isHidden = true
+                TitleField.isHidden = false
+                TitleField.placeholder = "1234 NE D ST, 99164, Pullman, WA"
+            }
+            if(eventStage == 3){
+                eventLocation = TitleField.text!
+                TitleField.isHidden = true
+                TitleLabel.text = "Almost done! We just need to pick the Starting Time and Date 🕣"
+                DateSelect.isHidden = false
+            }
+            if(eventStage == 4){
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMM d, yyyy h:mm a"
+                eventStartTime = String(formatter.date(from: DateSelect.date))
+                //*** TO DO: IMPLEMENT TIME
+                // NEED TIMEZONE AND FORMATTING
+                TitleField.isHidden = true
+                TitleLabel.text = "Lastly, We just need to pick the End Time and Date 🕤"
+                DateSelect.isHidden = false
+            }
         }
     }
     
+}
+
+
+//Stack Overflow - Soohwan Park
+//stackoverflow.com/questions/8119880/how-to-add-one-month-to-an-nsdate
+//extension to add time to a date object
+extension Date {
+    func addMonth(n: Int) -> Date {
+        let cal = NSCalendar.current
+        return cal.date(byAdding: .month, value: n, to: self)!
+    }
+    func addDay(n: Int) -> Date {
+        let cal = NSCalendar.current
+        return cal.date(byAdding: .day, value: n, to: self)!
+    }
+    func addSec(n: Int) -> Date {
+        let cal = NSCalendar.current
+        return cal.date(byAdding: .second, value: n, to: self)!
+    }
 }
