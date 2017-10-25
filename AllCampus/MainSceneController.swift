@@ -386,6 +386,9 @@ class MainSceneController: UIViewController {
         self.present(alertcontroller, animated: true,completion: nil)
         }
     }
+    
+    
+    //**********************************Filter Event Type***************************************
     @IBAction func AllSelected(_ sender: Any) {
         removeObjects()
         buildObjects(type: 0)
@@ -403,7 +406,6 @@ class MainSceneController: UIViewController {
     @IBAction func schoolSelected(_ sender: Any) {
         removeObjects()
         buildObjects(type: 1)
-        //self.view.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
         gradientLayer = gradient.getHoneydewGradient()
@@ -446,7 +448,7 @@ class MainSceneController: UIViewController {
         buildObjects(type: 4)
         var gradient = ColorsHandler()
         var gradientLayer: CAGradientLayer
-        gradientLayer = gradient.getTranquilGradient()
+        gradientLayer = gradient.getIbizaSunset()
         gradientLayer.frame = scroller.bounds
         scroller.backgroundColor = .clear
         totalLayers += 1
@@ -468,5 +470,8 @@ class MainSceneController: UIViewController {
         MiscBTN.frame.origin.x = xOffsetButtons
         MiscBTN.contentHorizontalAlignment = .left
     }
+    //**********************************End of Filter Event Type***************************************
+    
+    
     
 }

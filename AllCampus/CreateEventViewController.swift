@@ -23,7 +23,7 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
     @IBOutlet weak var EndContinueBTN: UIButton!
     @IBOutlet weak var EndTextView: UITextView!
     
-    var xOffsetButtons: CGFloat = 0.0
+    var xOffsetButtons: CGFloat = -0.3
     var eventStage = 0 //keep track of what stage of information is being added
     var restart = false
     var eventTitle: String = ""
@@ -33,9 +33,12 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
     var eventStartTime: String = ""
     var eventEndTime: String = ""
     override func viewDidLoad() {
+        
+        TitleField.text = eventTitle
+       
         var tempDate = Date()
         DateSelect.minimumDate = Date()
-        DateSelect.maximumDate = tempDate.addMonth(n: 1)
+        DateSelect.maximumDate = tempDate.addMonth(n: 12)
         TitleField.backgroundColor = UIColor.clear
         hideAll()
         
@@ -62,12 +65,12 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         self.view.layer.insertSublayer(gradientLayer, at: 0)
         
         //Button styling
-        /*
-        SchoolBtn.contentHorizontalAlignment = .right
-        PartyBtn.contentHorizontalAlignment = .right
-        GreekBtn.contentHorizontalAlignment = .right
-        MiscBtn.contentHorizontalAlignment = .right
-         */
+        
+        SchoolBtn.contentHorizontalAlignment = .left
+        PartyBtn.contentHorizontalAlignment = .left
+        GreekBtn.contentHorizontalAlignment = .left
+        MiscBtn.contentHorizontalAlignment = .left
+        
         SchoolBtn.frame.origin.x = xOffsetButtons
         PartyBtn.frame.origin.x = xOffsetButtons
         GreekBtn.frame.origin.x = xOffsetButtons
@@ -81,25 +84,27 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         // Dispose of any resources that can be recreated.
     }
     
+    //handles removing the keyboard from view on "return" key press
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         ContinueBtn.isHidden = false
         return false
     }
+    //allows continute button to be viewed after text is input
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if(restart == false){
-        DescriptionField.text = ""
-            restart = true
-        }
         ContinueBtn.isHidden = false
     }
     
+    //allows keyboard to be removed on return key pressed
+    //also keyboard will disappear on textview drag
     func textViewDidChange(_ textView: UITextView) {
         if(DescriptionField.text.characters.last == "\n"){
             self.view.endEditing(true)
         }
     }
     
+    
+    //animates moving buttons out of view
     func moveButtons(){
         UIView.animate(withDuration: 1, animations: {
             self.SchoolBtn.frame.origin.x -=  -1000
@@ -115,42 +120,66 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         }, completion: nil)
         titleEvent()
     }
+    
+    //**********************************Event Selection*****************************************
+    //if school is initally selected
+    //event type will be set accordingly and buttons will be moved out of view
     @IBAction func SchoolSelect(_ sender: Any) {
         eventType = 1
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
-            self.HeaderLabel.text = "Let's Plan This School Event!"
+            self.HeaderLabel.text = "Let's Plan a School Event!"
         }, completion: nil)
+        if(TitleField.text != "")
+        {
+            ContinueBtn .isHidden = false
+        }
     }
     @IBAction func PartySelect(_ sender: Any) {
         eventType = 2
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
-            self.HeaderLabel.text = "Let's\nThrow\nA Party."
+            self.HeaderLabel.text = "Let's\nThrow\na Party."
         }, completion: nil)
+        if(TitleField.text != "")
+        {
+            ContinueBtn.isHidden = false
+        }
     }
     @IBAction func GreekSelect(_ sender: Any) {
         eventType = 3
         moveButtons()
         UIView.animate(withDuration: 2.5, animations: {
-            self.HeaderLabel.text = "Let's Plan\nThis Greek Event!"
+            self.HeaderLabel.text = "Let's Plan\na Greek Event!"
         }, completion: nil)
+        if(TitleField.text != "")
+        {
+            ContinueBtn.isHidden = false
+        }
     }
     @IBAction func MiscSelect(_ sender: Any) {
         eventType = 4
         moveButtons()
-        UIView.animate(withDuration: 2.5, animations: {
-            self.HeaderLabel.text = "Let's Plan\nThis Community Event!"
-        }, completion: nil)
         
+        UIView.animate(withDuration: 2.5, animations: {
+            self.HeaderLabel.text = "Let's Plan\nan Event!"
+        }, completion: nil)
+        if(TitleField.text != "")
+        {
+            ContinueBtn.isHidden = false
+        }
     }
+    //**********************************End Event Selection*****************************************
+    
+    //Handles if restart button is selected
+    //  user will return to first screen however all fields are still
+    //  populated with necessary information.
     @IBAction func RestartSelect(_ sender: Any) {
         restart = false
         TitleField.text = ""
-        eventStage = 0
-        self.viewDidLoad()
-        self.viewWillAppear(true)
-        
+            eventStage = 0
+            self.viewDidLoad()
+            self.viewWillAppear(true)
     }
     
     func titleEvent(){
@@ -164,18 +193,29 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         DescriptionField.isHidden = true
         DateSelect.isHidden = true
     }
+    
+    //Moves the user along based off of which "stage" in the event planning process they are on
+    //  First:  Type of Event
+    //  Second: Title of event
+    //  Third:  Description of event
+    //  Fourth: Location of event
+    //  Fifth:  Start time of event
+    //  Sixth:  End Time of event
+    //  Seventh:Review All Details
     @IBAction func ContinueSelect(_ sender: Any) {
-        if(TitleField.text != "" || eventStage == 1){
+        if(TitleField.text != "" || eventStage >= 1){
             eventStage += 1
             self.view.endEditing(true)
             
             if(eventStage == 1)
             {
                     eventTitle = TitleField.text!
-                    TitleField.text = ""
+                    TitleField.text = eventTitle
                     TitleLabel.text = "Perfect, Now lets write a good description of your event 🎉"
+                    DescriptionField.text = eventContent
                     DescriptionField.isHidden = false
                     TitleField.isHidden = true
+                
             }
             if(eventStage == 2)
             {
@@ -184,6 +224,8 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
                 DescriptionField.isHidden = true
                 TitleField.isHidden = false
                 TitleField.placeholder = "1234 NE D ST, 99164, Pullman, WA"
+                TitleField.text = eventLocation
+                DateSelect.isHidden = true
             }
             if(eventStage == 3){
                 eventLocation = TitleField.text!
@@ -196,6 +238,7 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
                 formatter.dateFormat = "MMM d, yyyy h:mm a"
                 eventStartTime = formatter.string(from: DateSelect.date)
                 print(formatter.string(from: DateSelect.date))
+                DateSelect.date.addDay(n: 1)
                 TitleField.isHidden = true
                 TitleLabel.text = "Lastly, We just need to pick the End Time and Date 🕤"
             }

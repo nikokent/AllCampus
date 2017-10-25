@@ -131,6 +131,18 @@ class ColorsHandler{
         return gradientLayer
     }
     
+    func getIbizaSunset() -> CAGradientLayer {
+        let topColor = "#ee0979".hexColor
+        let bottomColor = "#ff6a00".hexColor
+        
+        let gradientColors: [CGColor] = [topColor.cgColor, bottomColor.cgColor]
+        let gradientLocation: [Float] = [0.0, 1.0]
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.locations = gradientLocation as [NSNumber]
+        gradientLayer.colors = gradientColors
+        return gradientLayer
+    }
+    
     /*EXAMPLE IMPLEMENTATION
      var gradient = ColorsHandler()
      var gradientLayer: CAGradientLayer
