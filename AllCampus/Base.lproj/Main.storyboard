@@ -132,8 +132,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="MiscSelected:" destination="WW6-5N-Ljz" eventType="touchUpInside" id="vJJ-b0-U49"/>
-                                    <segue destination="9Gs-KE-4tH" kind="show" id="3ie-ji-mIJ"/>
+                                    <segue destination="9Gs-KE-4tH" kind="show" id="8pf-dt-R9s"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -206,7 +205,7 @@
                                 <rect key="frame" x="16" y="-53" width="334" height="403"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="51"/>
-                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="textColor" red="0.36078431372549019" green="0.36862745098039218" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmO-Wv-2tI">
@@ -254,6 +253,13 @@
                                 <color key="textColor" red="0.43510645627975464" green="0.44152498245239258" blue="0.47513502836227417" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First enter a title for the event!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrW-3K-B4M">
+                                <rect key="frame" x="32" y="210" width="310" height="371"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="20"/>
+                                <color key="textColor" red="0.4351064563" green="0.4415249825" blue="0.47513502839999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Click Here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9VI-Es-Ujp">
                                 <rect key="frame" x="58" y="305" width="259" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -282,7 +288,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="continue" enablesReturnKeyAutomatically="YES"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                             </textView>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="a7q-Sw-hMO">
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="a7q-Sw-hMO">
                                 <rect key="frame" x="0.0" y="283" width="375" height="127"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <date key="date" timeIntervalSinceReferenceDate="529903530.88719499">
@@ -295,6 +301,26 @@
                                     <!--2037-12-31 11:00:00 +0000-->
                                 </date>
                             </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E17-kn-Ffo">
+                                <rect key="frame" x="138" y="589" width="90" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" red="0.4351064563" green="0.4415249825" blue="0.47513502839999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="ContinueSelect:" destination="9Gs-KE-4tH" eventType="touchUpInside" id="tu2-hj-K7z"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kv-at-q1a">
+                                <rect key="frame" x="32" y="268" width="310" height="313"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.70108551089533688" green="0.70108551089533688" blue="0.70108551089533688" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.36078431370000003" green="0.36862745099999999" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="mMU-ic-XPI"/>
@@ -303,12 +329,15 @@
                         <outlet property="ContinueBtn" destination="OH9-o9-k5L" id="2I2-tI-cH6"/>
                         <outlet property="DateSelect" destination="a7q-Sw-hMO" id="HPk-Sc-Cky"/>
                         <outlet property="DescriptionField" destination="IFh-by-Tf7" id="IIM-We-IpU"/>
+                        <outlet property="EndContinueBTN" destination="E17-kn-Ffo" id="dO4-yR-qEY"/>
+                        <outlet property="EndDetailsLabel" destination="vrW-3K-B4M" id="f8p-B2-Vhb"/>
+                        <outlet property="EndTextView" destination="2kv-at-q1a" id="utQ-TH-k9Q"/>
                         <outlet property="GreekBtn" destination="pmO-Wv-2tI" id="p27-ST-tsu"/>
                         <outlet property="HeaderLabel" destination="f5g-J7-B5a" id="DP8-vd-jcJ"/>
                         <outlet property="MiscBtn" destination="cfs-7b-RLe" id="daH-ti-jdn"/>
                         <outlet property="PartyBtn" destination="aXm-MZ-3us" id="Rn0-wa-kqw"/>
                         <outlet property="SchoolBtn" destination="lYe-EJ-obf" id="8AJ-Lk-DtS"/>
-                        <outlet property="TitleField" destination="9VI-Es-Ujp" id="Y9e-Uv-BNd"/>
+                        <outlet property="TitleField" destination="9VI-Es-Ujp" id="IDC-6G-pD6"/>
                         <outlet property="TitleLabel" destination="L6J-Br-kgQ" id="M3c-VL-nfj"/>
                     </connections>
                 </viewController>

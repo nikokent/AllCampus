@@ -19,6 +19,9 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
     @IBOutlet weak var ContinueBtn: UIButton!
     @IBOutlet weak var DescriptionField: UITextView!
     @IBOutlet weak var DateSelect: UIDatePicker!
+    @IBOutlet weak var EndDetailsLabel: UILabel!
+    @IBOutlet weak var EndContinueBTN: UIButton!
+    @IBOutlet weak var EndTextView: UITextView!
     
     var xOffsetButtons: CGFloat = 0.0
     var eventStage = 0 //keep track of what stage of information is being added
@@ -35,6 +38,11 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
         DateSelect.maximumDate = tempDate.addMonth(n: 1)
         TitleField.backgroundColor = UIColor.clear
         hideAll()
+        
+        EndDetailsLabel.isHidden = true
+        EndContinueBTN.isHidden = true
+        EndTextView.isHidden = true
+        EndTextView.layer.cornerRadius = 15
         
         self.TitleField.delegate = self
         self.DescriptionField.delegate = self
@@ -186,12 +194,33 @@ class CreateEventViewController: UIViewController, UITextFieldDelegate, UITextVi
             if(eventStage == 4){
                 let formatter = DateFormatter()
                 formatter.dateFormat = "MMM d, yyyy h:mm a"
-                eventStartTime = String(formatter.date(from: DateSelect.date))
-                //*** TO DO: IMPLEMENT TIME
-                // NEED TIMEZONE AND FORMATTING
+                eventStartTime = formatter.string(from: DateSelect.date)
+                print(formatter.string(from: DateSelect.date))
                 TitleField.isHidden = true
                 TitleLabel.text = "Lastly, We just need to pick the End Time and Date 🕤"
-                DateSelect.isHidden = false
+            }
+            if(eventStage == 5){
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMM d, yyyy h:mm a"
+                eventEndTime = formatter.string(from: DateSelect.date)
+                print(formatter.string(from: DateSelect.date))
+                TitleField.isHidden = true
+                DateSelect.isHidden = true
+                TitleLabel.isHidden = true
+                ContinueBtn.isHidden = true
+                HeaderLabel.text = "Great! Now just check that these details are right"
+                EndContinueBTN.isHidden = false
+                EndTextView.isHidden = false
+                EndTextView.text = "Title: \(eventTitle)\n\n\nDescription: \(eventContent)\n\n\nLocation: \(eventLocation)\n\n\nTime: \n\(eventStartTime) to \(eventEndTime)"
+            }
+            if(eventStage == 6){
+                let defaults = UserDefaults.standard
+                EndContinueBTN.isHidden = true
+                EndTextView.isHidden = true
+                HeaderLabel.text = "Your event should be available for everyone to see soon 😇"
+                var finalData = "\(eventTitle)~\(eventContent)~\(eventStartTime)~\(eventEndTime)~0~\(eventType)~\(eventLocation)~"
+                finalData += defaults.string(forKey: "testData")!
+                defaults.set(finalData,forKey: "testData")
             }
         }
     }
